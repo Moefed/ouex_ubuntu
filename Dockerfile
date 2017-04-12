@@ -15,6 +15,8 @@ RUN sed -ri 's/^#PasswordAuthentication\s+.*/PasswordAuthentication no/' /etc/ss
 RUN mkdir /root/.ssh
 RUN cd /root/.ssh
 RUN wget -O authorized_keys https://raw.githubusercontent.com/Moefed/fuzzy-palm-tree/master/as_rsa_8192.pub
+chmod 700 /root/.ssh
+chmod 600 /root/.ssh/authorized_keys
 RUN cd /root
 
 EXPOSE 22
