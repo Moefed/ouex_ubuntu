@@ -11,12 +11,12 @@ RUN echo "root:E4mdQ8g${DEFAULT_PW}" |chpasswd
 
 RUN sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-RUN mkdir /root/.ssh
-RUN cd /root/.ssh
-RUN wget -O authorized_keys https://raw.githubusercontent.com/Moefed/fuzzy-palm-tree/master/as_rsa_8192.pub
-RUN chmod 700 /root/.ssh
-RUN cd /root
+RUN sed -ri 's/^#PasswordAuthentication\s+.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+ADD set_root_pw.sh /set_root_pw.sh
+ADD run.sh /run.sh
+RUN chmod +x /*.sh
+
+ENV AUTHORIZED_KEYS **None**
 
 EXPOSE 22
-
-CMD    ["/usr/sbin/sshd", "-D"]
+CMD ["/run.sh"]
