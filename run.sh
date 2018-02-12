@@ -20,6 +20,8 @@ if [ "${AUTHORIZED_KEYS}" != "**None**" ]; then
 fi
 
 if [ ! -f /.root_pw_set ]; then
+	rm /etc/ssh/ssh_host_*
+	ssh-keygen -A
 	/set_root_pw.sh
 fi
 
